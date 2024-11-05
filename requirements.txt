@@ -1,5 +1,7 @@
-pandas
-plotly
-matplotlib
-seaborn
-palmerpenguins
+shiny 
+shinywidgets 
+shinyswatch 
+palmerpenguins 
+plotly 
+seaborn  
+matplotlib  
