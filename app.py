@@ -33,18 +33,26 @@ with ui.sidebar(position="right", bg="#f8f8f8", open="open"):
 
 # Main content layout
 with ui.layout_columns():
+    # Plotly Histogram using filtered data
     with ui.card():
         ui.card_header("Plotly Histogram")
         @render_plotly
         def plotly_histogram():
-            return px.histogram(filtered_data(), x=input.selected_attribute(), nbins=input.plotly_bin_count(), color="species")
+            return px.histogram(
+                filtered_data(), 
+                x=input.selected_attribute(),
+                nbins=input.plotly_bin_count(),
+                color="species"
+            )
 
+    # Data Table using filtered data
     with ui.card():
         ui.card_header("Data Table")
         @render.data_frame
         def data_table():
             return filtered_data()
 
+    # Data Grid using filtered data
     with ui.card():
         ui.card_header("Data Grid")
         @render.data_frame
@@ -53,23 +61,38 @@ with ui.layout_columns():
 
 # Additional visualizations
 with ui.layout_columns():
+    # Plotly Scatterplot using filtered data
     with ui.card():
         ui.card_header("Plotly Scatterplot: Body Mass vs. Bill Depth")
         @render_plotly
         def plotly_scatterplot():
-            return px.scatter(data_frame=filtered_data(), x="body_mass_g", y="bill_depth_mm", color="species", labels={"bill_depth_mm": "Bill Depth (mm)", "body_mass_g": "Body Mass (g)"})
+            return px.scatter(
+                data_frame=filtered_data(),
+                x="body_mass_g",
+                y="bill_depth_mm",
+                color="species",
+                labels={"bill_depth_mm": "Bill Depth (mm)", "body_mass_g": "Body Mass (g)"}
+            )
 
+    # Seaborn Histogram using filtered data
     with ui.card():
         ui.card_header("Seaborn Histogram: Body Mass")
         @render.plot
         def seaborn_histogram():
             fig, ax = plt.subplots()
-            sns.histplot(data=filtered_data(), x="body_mass_g", hue="species", bins=input.seaborn_bin_count(), ax=ax)
+            sns.histplot(
+                data=filtered_data(), 
+                x="body_mass_g", 
+                hue="species", 
+                bins=input.seaborn_bin_count(), 
+                ax=ax
+            )
             ax.set_xlabel("Mass (g)")
             ax.set_ylabel("Count")
             ax.set_title("Body Mass Distribution (Seaborn)")
             return fig
 
+    # Summary Statistics Table using filtered data
     with ui.card():
         ui.card_header("Summary Statistics")
         @render.data_frame
